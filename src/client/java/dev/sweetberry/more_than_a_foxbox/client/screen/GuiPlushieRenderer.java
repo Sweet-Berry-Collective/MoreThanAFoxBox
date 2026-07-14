@@ -14,7 +14,7 @@ import dev.sweetberry.more_than_a_foxbox.client.PlushieModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -24,8 +24,7 @@ import org.jspecify.annotations.NonNull;
 public class GuiPlushieRenderer extends PictureInPictureRenderer<GuiPlushieRenderState> {
 	private final BlockModelRenderState blockModelState = new BlockModelRenderState();
 
-	public GuiPlushieRenderer(MultiBufferSource.BufferSource bufferSource) {
-		super(bufferSource);
+	public GuiPlushieRenderer() {
 	}
 
 	@Override
@@ -34,22 +33,19 @@ public class GuiPlushieRenderer extends PictureInPictureRenderer<GuiPlushieRende
 	}
 
 	@Override
-	protected void renderToTexture(GuiPlushieRenderState renderState, @NonNull PoseStack poseStack) {
+	protected void renderToTexture(GuiPlushieRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector) {
 		GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
-		gameRenderer.getLighting().setupFor(Lighting.Entry.ENTITY_IN_UI);
+		gameRenderer.lighting().setupFor(Lighting.Entry.ENTITY_IN_UI);
 
 		poseStack.translate(-0.525F, 0.0, 0.0);
 		poseStack.mulPose(Axis.XP.rotationDegrees(25.0F));
 		poseStack.rotateAround(Axis.YP.rotation(renderState.yRot()), 0.5F, 0.0F, -0.5F);
 		poseStack.scale(1.0F, -1.0F, -1.0F);
 
-		FeatureRenderDispatcher featureRenderDispatcher = gameRenderer.getFeatureRenderDispatcher();
-
 		Identifier modelId = getModelId(renderState);
 		PlushieModel.updatePlushieModelState(blockModelState, modelId);
 
-		blockModelState.submit(poseStack, featureRenderDispatcher.getSubmitNodeStorage(), 15728880, OverlayTexture.NO_OVERLAY, 0);
-		featureRenderDispatcher.renderAllFeatures();
+		blockModelState.submit(poseStack, submitNodeCollector, 15728880, OverlayTexture.NO_OVERLAY, 0);
 	}
 
 	private Identifier getModelId(final GuiPlushieRenderState renderState) {

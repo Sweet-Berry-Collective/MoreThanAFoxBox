@@ -52,8 +52,8 @@ dependencies {
 	implementation(libs.yumi.commons.core)
 	include(libs.yumi.commons.core)
 	
-//	modRuntimeOnly(libs.sodium) // re-enable when 0.8.1 comes out lol
-	runtimeOnly(libs.modmenu)
+	localRuntime(libs.sodium)
+	localRuntime(libs.modmenu)
 }
 
 loom {

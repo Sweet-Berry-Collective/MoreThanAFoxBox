@@ -18,6 +18,7 @@ import dev.sweetberry.more_than_a_foxbox.entity.BoxSeatEntity;
 import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
@@ -162,7 +163,7 @@ public class BoxBlock extends PlushieHoldingBlock {
 			if (seatEntity == null)
 				return InteractionResult.SUCCESS;
 
-			seatEntity.setPos(pos.getBottomCenter());
+			seatEntity.setPos(Vec3.atBottomCenterOf(pos));
 			level.addFreshEntity(seatEntity);
 			
 			if (seatEntity.isVehicle())

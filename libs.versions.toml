@@ -1,14 +1,14 @@
 [versions]
-loom = "1.14.+"
+loom = "1.17.+"
 minotaur = "2.+"
 
-mc = "26.1.2"
-fl = "0.18.4"
-fapi = "0.145.3+26.1.1"
-yumi_licenser = "2.1.+"
+mc = "26.2"
+fl = "0.19.3"
+fapi = "0.154.2+26.2"
+yumi_licenser = "4.0.+"
 yumi-commons = "2.0.0"
-sodium = "mc1.21.11-0.8.0-fabric"
-modmenu = "18.0.0-alpha.8"
+sodium = "mc26.2-0.9.1-fabric"
+modmenu = "20.0.1"
 
 [plugins]
 loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }

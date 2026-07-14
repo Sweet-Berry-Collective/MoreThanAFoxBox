@@ -11,6 +11,7 @@ import java.util.Optional;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieDataComponent;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.BlockPos;
@@ -144,7 +145,7 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 		if (maybeSound == null)
 			return;
 
-		var center = pos.getCenter();
+		var center = Vec3.atCenterOf(pos);
 
 		level.playSeededSound(null, center.x, center.y, center.z, maybeSound, SoundSource.PLAYERS, 1f, 1f,  level.getRandom().nextLong());
 	}

@@ -68,7 +68,7 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 			BoxSeatEntityRenderer::new
 		);
 
-		PictureInPictureRendererRegistry.register(ctx -> new GuiPlushieRenderer(ctx.bufferSource()));
+		PictureInPictureRendererRegistry.register(_ -> new GuiPlushieRenderer());
 
 		MenuScreens.register(MtfbMenus.SEWING_TABLE.get(), SewingTableScreen::new);
 	}
