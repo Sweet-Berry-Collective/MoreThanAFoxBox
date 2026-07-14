@@ -67,13 +67,11 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 		state.isBox = blockEntity instanceof BoxBlockEntity;
 
 		Optional<Identifier> optionalPoseModel = blockEntity.getPoseModel(blockEntity.getBlockState());
-		Identifier poseModel;
 
 		if (blockEntity instanceof BoxBlockEntity && optionalPoseModel.isEmpty())
 			return;
 
-		poseModel = optionalPoseModel.orElseGet(() -> MoreThanAFoxbox.id(
-			MoreThanAFoxbox.ID + "/placeholder"));
+		Identifier poseModel = optionalPoseModel.orElseGet(() -> MoreThanAFoxbox.id(MoreThanAFoxbox.ID + "/placeholder"));
 
 		PlushieModel.updatePlushieModelState(state.model, poseModel);
 	}
