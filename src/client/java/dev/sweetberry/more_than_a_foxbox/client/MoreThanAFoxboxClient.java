@@ -23,6 +23,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.ExtraModelKey;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.SimpleUnbakedExtraModel;
+import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
 import net.fabricmc.fabric.api.client.rendering.v1.PictureInPictureRendererRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -55,21 +56,10 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 		ModelLoadingPlugin.register(pluginContext -> {
 			pluginContext.modifyBlockModelAfterBake().register((model, context) -> {
 				if (context.state().is(MtfbBlocks.PLUSHIE.get())) {
-					return new BlockStateModel() {
+					return new WrapperBlockStateModel(model) {
 						@Override
-						public void collectParts(RandomSource random, List<BlockStateModelPart> output) {
-							model.collectParts(random, output);
-						}
-
-						@Override
-						public Material.Baked particleMaterial() {
-							return model.particleMaterial();
-						}
-
-						@Override
-						public Material.Baked particleMaterial(BlockAndTintGetter level, BlockPos pos, BlockState state) {
-							PlushieBlockEntity be = level.getBlockEntity(pos, MtfbBlockEntityTypes.PLUSHIE.get())
-								.orElse(null);
+						public Material.Baked particleMaterial(BlockAndTintGetter level, BlockPos pos, BlockState state) {PlushieBlockEntity be = level.getBlockEntity(pos, MtfbBlockEntityTypes.PLUSHIE.get())
+							.orElse(null);
 							if (be != null) {
 								Identifier poseModel = be.getPoseModel(be.getBlockState())
 									.orElseGet(() -> MoreThanAFoxbox.id(MoreThanAFoxbox.ID + "/placeholder"));
@@ -80,12 +70,7 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 										.particleMaterial(level, pos, state);
 								}
 							}
-							return particleMaterial();
-						}
-
-						@Override
-						public @BakedQuad.MaterialFlags int materialFlags() {
-							return 0;
+							return super.particleMaterial(level, pos, state);
 						}
 					};
 				}
